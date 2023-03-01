@@ -202,8 +202,9 @@ public class EchoTCPClient {
                 case 2:
                     return;
             }
+        }else {
+            System.out.println("\n" + resp + "\n");
         }
-        System.out.println("\n" + resp + "\n");
     }
     public void protocoloMod() throws IOException {
         System.out.print("Ingrese la siguiente información" +
