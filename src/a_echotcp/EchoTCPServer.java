@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EchoTCPServer {
-    public static final int PORT = 4200;
+    public static final int PORT = 3400;
     private ServerSocket listener;
     private Socket serverSideSocket;
     private PrintWriter toNetwork;
@@ -26,10 +26,16 @@ public class EchoTCPServer {
         while (true) {
             serverSideSocket = listener.accept();
             System.out.println("Cliente recibido desde: " + serverSideSocket.getInetAddress().getHostAddress());
-            createStreams(serverSideSocket);
-            while (!serverSideSocket.isClosed()) {
-                menu(serverSideSocket);
-            }
+            new Thread(() -> {
+                try {
+                    createStreams(serverSideSocket);
+                    while (!serverSideSocket.isClosed()) {
+                        menu(serverSideSocket);
+                    }
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }).start();
         }
     }
 

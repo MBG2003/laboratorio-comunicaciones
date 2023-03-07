@@ -8,8 +8,8 @@ import java.net.Socket;
 import java.util.Scanner;
 public class EchoTCPClient {
     private static final Scanner SCANNER = new Scanner(System.in);
-    public static final String SERVER = "localhost";
-    public static final int PORT = 4200;
+    public static final String SERVER = "8.tcp.ngrok.io";
+    public static final int PORT = 16201;
     private PrintWriter toNetwork;
     private BufferedReader fromNetwork;
     private Socket clientSideSocket;
@@ -130,8 +130,11 @@ public class EchoTCPClient {
         String cedula = SCANNER.nextLine();
         System.out.print("Monto: ");
         String monto = SCANNER.nextLine();
-        toNetwork.println("MOVI/CONSIG/" + idCuenta + "/" + cedula + "/" + monto);
-        String resp = fromNetwork.readLine();
+        String resp = "Faltan campos por llenar";
+        if(idCuenta.equals("") || cedula.equals("") || monto.equals("")) {
+            toNetwork.println("MOVI/CONSIG/" + idCuenta + "/" + cedula + "/" + monto);
+            resp = fromNetwork.readLine();
+        }
         System.out.println(resp);
     }
 
@@ -145,8 +148,11 @@ public class EchoTCPClient {
         String monto = SCANNER.nextLine();
         System.out.print("Clave: ");
         String clave = SCANNER.nextLine();
-        toNetwork.println("MOVI/RETIRO/" + idCuenta + "/" + cedula + "/" + monto + "/" + clave);
-        String resp = fromNetwork.readLine();
+        String resp = "Faltan campos por llenar";
+        if(cedula.equals("") || idCuenta.equals("") || monto.equals("") || clave.equals("")) {
+            toNetwork.println("MOVI/RETIRO/" + idCuenta + "/" + cedula + "/" + monto + "/" + clave);
+            resp = fromNetwork.readLine();
+        }
         System.out.println(resp);
     }
 
@@ -160,8 +166,11 @@ public class EchoTCPClient {
         String idCuentaDestino = SCANNER.nextLine();
         System.out.print("Monto: ");
         String monto = SCANNER.nextLine();
-        toNetwork.println("MOVI/TRANSFER/" + idCuentaOrigen + "/" + clave + "/" + idCuentaDestino + "/" + monto);
-        String resp = fromNetwork.readLine();
+        String resp = "Faltan campos por llenar";
+        if(idCuentaOrigen.equals("") || clave.equals("") || idCuentaDestino.equals("") || monto.equals("")) {
+            toNetwork.println("MOVI/TRANSFER/" + idCuentaOrigen + "/" + clave + "/" + idCuentaDestino + "/" + monto);
+            resp = fromNetwork.readLine();
+        }
         System.out.println(resp);
     }
 
@@ -171,8 +180,11 @@ public class EchoTCPClient {
         String cedula = SCANNER.nextLine();
         System.out.print("\nClave: ");
         String clave = SCANNER.nextLine();
-        toNetwork.println("CUENTA/CONSUL/" + cedula + "/" + clave);
-        String resp = fromNetwork.readLine();
+        String resp = "Faltan campos por llenar";
+        if(cedula.equals("") || clave.equals("")){
+            toNetwork.println("CUENTA/CONSUL/" + cedula + "/" + clave);
+             resp = fromNetwork.readLine();
+        }
         System.out.println(resp);
     }
 
@@ -195,12 +207,8 @@ public class EchoTCPClient {
                     "\n1\tSi" +
                     "\n2\tNo");
             int opc = Integer.parseInt(SCANNER.nextLine());
-            switch (opc){
-                case 1:
-                    protocoloMod();
-                    break;
-                case 2:
-                    return;
+            if (opc == 1) {
+                protocoloMod();
             }
         }else {
             System.out.println("\n" + resp + "\n");
@@ -216,8 +224,11 @@ public class EchoTCPClient {
         String infoMod = SCANNER.nextLine();
         System.out.print("\tNueva información: ");
         String nuevaInfo = SCANNER.nextLine();
-        toNetwork.println("CUENTA/MOD/" + idCuenta + "/" + clave + "/" + infoMod + "/" + nuevaInfo);
-        String resp = fromNetwork.readLine();
+        String resp = "Faltan campos por llenar";
+        if(idCuenta.equals("") || clave.equals("") || infoMod.equals("") || nuevaInfo.equals("")) {
+            toNetwork.println("CUENTA/MOD/" + idCuenta + "/" + clave + "/" + infoMod + "/" + nuevaInfo);
+            resp = fromNetwork.readLine();
+        }
         System.out.println(resp);
     }
     public void protocoloCerrar() throws IOException {
@@ -228,8 +239,11 @@ public class EchoTCPClient {
         String clave = SCANNER.nextLine();
         System.out.print("\n\tMotivo de la cancelación: ");
         String motivo = SCANNER.nextLine();
-        toNetwork.println("CUENTA/CERRAR/" + idCuenta + "/" + clave + "/" + motivo);
-        String resp = fromNetwork.readLine();
+        String resp = "Faltan campos por llenar";
+        if(idCuenta.equals("") || clave.equals("") || motivo.equals("")) {
+            toNetwork.println("CUENTA/CERRAR/" + idCuenta + "/" + clave + "/" + motivo);
+            resp = fromNetwork.readLine();
+        }
         System.out.println(resp);
     }
 
